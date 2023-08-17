@@ -1,0 +1,218 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <form  onsubmit="return validate()" action="../controller/message.php" method="post" enctype="multipart/form-data">
+            <b>Name :</b>
+            <input id="name" type="text" value="" name="name"><br><br><br>
+            <b>E-mail :</b> 
+            <input id="email" type="text" class="email_id" placeholder="anything@example.com" value="" name="email">
+            <span class="email_error"></span><br><br><br>
+            <b>User Name :</b>
+            <input id="uname" type="text"  value="" name="uname"><br><br><br>
+            <b>Password :</b>
+            <input type="password" id="password" value="" name="password"><br><br><br>
+            <b>Confirm Password :</b>
+            <input type="password" id="confirmpassword" value="" name="confirmpassword"><br><br><br>
+            <b>Date Of Birth :</b>
+            <input type="date" id="dateofbirth" placeholder="dd/mm/yyyy" value="" min="1953-01-01" max="2024-12-31" name="dateofbirth" ><br><br><br>
+            <br><br><br>  
+            <input type="file" name="image"><br><br>
+            <button type="submit">REGISTER</button>
+        </form>
+        
+
+<script>
+  function countWords(str) 
+{
+  const wordsArray = str.split(/\s+/);
+  return wordsArray.length;
+}
+
+    function validate()
+                {
+                    var count;
+                    var name = document.getElementById("name");
+                    var email = document.getElementById("email");
+                    var username = document.getElementById("uname");
+                    var password = document.getElementById("password");
+                    var confirmpassword = document.getElementById("confirmpassword");
+                    var dob = document.getElementById("dateofbirth");
+                    
+                    
+                    function checkname(name)
+                    { name=name.value.trim();
+                        if (name=="") 
+                        {
+                            alert("name must me filled up");
+                            count=0;
+                        }else if(countWords(name)<2)
+                        {
+                            alert("name must contain 2 words")
+                            count=0; 
+                        }else if(/\d/.test(name))
+                        {
+                            alert("name must not contain any number");
+                            count=0;
+                        }else 
+                        count=1;
+                        return count;
+
+                    }
+                    
+                    function checkemail(email)
+                    {
+                        if(email.value=="")
+                        {
+                            alert("email must be filled up");
+                            count=0;
+                        }else count=1;
+                        return count;
+                    }
+
+                    function checkusername(username)
+                    {
+                        if(username.value=="")
+                        {
+                            alert("username must be filled up");
+                            count=0;
+                        }else count=1; 
+                        return count;
+                    }
+
+                    function checkpassword(password)
+                    {
+                        if (password.value=="")
+                        {
+                          alert("password must be filled up");
+                          count=0;
+                        }else count=1;
+                        return count;
+                    }
+
+
+                    function checkconfirmpassword(confirmpassword,password)
+                    { 
+                        confirmpassword=confirmpassword.value.trim();
+                        password=password.value.trim();
+                        if(confirmpassword=="")
+                        {
+                            alert("confirm your password");
+                            count=0;
+                        }else if(confirmpassword!==password)
+                        {
+                            alert("password doesnt match");
+                            count=0;
+
+                        }
+                        else count=1;
+                        return count;
+                    }
+
+                    function checkDOB(date)
+                    {
+                        if(date.value=="")
+                        {
+                            alert("confirm your date of birth");
+                            count=0;
+                        }else count=1;
+                        return count;
+
+                    }
+
+
+                    var resultName= checkname(name);
+                    if(resultName==1)
+                    {
+                        var resultEmail=checkemail(email);
+                        if(resultEmail)
+                        {
+                            var resultUsername =checkusername(username);
+                            if(resultUsername)
+                            {
+                                var resultPassword=checkpassword(password);
+                                if(resultPassword)
+                                {
+                                    var resultConfirmPassword=checkconfirmpassword(confirmpassword,password);
+                                    if(resultConfirmPassword)
+                                    {
+                                        var resultDOB =checkDOB(dob);
+
+
+                                    } 
+
+                                }
+                                
+
+                            }
+                           
+                            
+
+                        }
+
+                        
+                    }
+
+
+
+
+
+                    if(resultName==1 && resultEmail==1 && resultUsername==1 && resultPassword==1 && resultConfirmPassword==1 && resultDOB==1)
+                    {
+                        return true;
+                    }else 
+                    {
+                        return false;
+                    }
+                    
+                   
+
+
+                }
+
+
+
+
+</script>
+<script>
+$(document).ready(function()
+{
+    $('.email_id').keyup(function(e)
+    {
+        var email = $('.email_id').val();
+        //console.log(email);
+
+        $.ajax(
+            {
+                type: "POST",
+                url:"../controller/checkDuplicate.php",
+                data:{
+                    'check_emailbtn':1,
+                    'email':email,
+                },
+                success: function(response){
+                    //console.log(response);
+                    $('.email_error').text(response);
+
+
+                }
+
+            });
+
+    });
+
+});
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
