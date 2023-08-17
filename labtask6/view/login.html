@@ -1,0 +1,67 @@
+<html>
+    <head>   
+
+    </head>
+    <body>
+        <form  onsubmit="return validate()" action="../controller/checkpass.php" method="post" enctype="multipart/form-data">
+            <b>E-mail :</b> 
+            <input id="email" type="text" placeholder="anything@example.com" value="" name="email"><br><br><br>
+            <b>Password :</b>
+            <input type="password" id="password" value="" name="password"><br><br><br>
+            <button type="submit">REGISTER</button>
+        </form>
+        <script>
+
+
+
+        function validate()
+        {
+            function checkemail(email)
+            {
+                if(email.value=="")
+                {
+                    alert("email must be filled up");
+                    count=0;
+                }else count=1;
+                return count;
+            }
+
+            function checkpassword(password)
+            {
+                if (password.value=="")
+                {
+                    alert("password must be filled up");
+                    count=0;
+                }else count=1;
+                return count;
+            }
+            
+            
+            
+            
+            
+            var resultEmail=checkemail(email);
+            if(resultEmail)
+            {
+                var resultPassword=checkpassword(password);
+            }
+            
+            
+            if(resultEmail==1 && resultPassword==1)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+
+
+
+
+
+
+
+        }
+        </script>   
+    </body> 
+</html>
